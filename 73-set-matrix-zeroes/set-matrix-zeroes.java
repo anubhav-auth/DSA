@@ -1,62 +1,36 @@
 class Solution {
-    Boolean firstRowZero = false;
-    Boolean firstColumnZero = false;
-
     public void setZeroes(int[][] matrix) {
-        checkRowCol(matrix);
-        traverseInside(matrix);
-        finaliseZeros(matrix);
-        finaliseFirsts(matrix);
-    }
+        int m = matrix.length, n = matrix[0].length;
+        boolean firstRowZero = false, firstColumnZero = false;
 
-    public void checkRowCol(int [][] mat){
-        for(int i = 0; i< mat.length; i++){
-            if(i == 0){
-                for(int j = 0; j< mat[0].length; j++){
-                    if(mat[0][j] == 0) firstRowZero = true;
-                }
-            }
-            if(mat[i][0] == 0) firstColumnZero = true;
-        }
-    }
-
-    public void traverseInside(int [][] mat){
-        for(int i = 1; i < mat.length; i++){
-            for(int j = 1; j < mat[i].length; j++){
-                if(mat[i][j] == 0){
-                    mat[0][j] = 0;
-                    mat[i][0] = 0;
+        for (int i = 0; i < m; i++) {
+            for (int j = 0; j < n; j++) {
+                if (matrix[i][j] == 0) {
+                    if (i == 0) firstRowZero = true;
+                    if (j == 0) firstColumnZero = true;
+                    matrix[i][0] = 0; 
+                    matrix[0][j] = 0; 
                 }
             }
         }
-    }
 
-    public void finaliseZeros(int [][] mat){
-        for(int i = 1; i< mat.length; i++){
-            if(mat[i][0] == 0) {
-                for(int j = 1; j< mat[i].length; j++){
-                    mat[i][j] = 0;
+        for (int i = 1; i < m; i++) {
+            for (int j = 1; j < n; j++) {
+                if (matrix[i][0] == 0 || matrix[0][j] == 0) {
+                    matrix[i][j] = 0;
                 }
             }
         }
-        for(int i = 1; i< mat[0].length; i++){
-            if(mat[0][i] == 0) {
-                for(int j = 1; j< mat.length; j++){
-                    mat[j][i] = 0;
-                }
-            }
-        }
-    }
 
-    public void finaliseFirsts(int [][] mat){
-        if(firstRowZero){
-            for(int i = 0; i<mat[0].length; i++){
-                mat[0][i] = 0;
+        if (firstRowZero) {
+            for (int j = 0; j < n; j++) {
+                matrix[0][j] = 0;
             }
         }
-        if(firstColumnZero){
-            for(int i = 0; i<mat.length; i++){
-                mat[i][0] = 0;
+
+        if (firstColumnZero) {
+            for (int i = 0; i < m; i++) {
+                matrix[i][0] = 0;
             }
         }
     }
