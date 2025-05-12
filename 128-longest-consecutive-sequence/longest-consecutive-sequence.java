@@ -1,10 +1,8 @@
 class Solution {
     public int longestConsecutive(int[] nums) {
-        int l = nums.length;
+        if(nums.length == 0) return 0;
 
-        if(l == 0) return 0;
-
-        Set<Integer> s = new TreeSet<>();
+        Set<Integer> s = new HashSet<>();
         for(int i: nums) s.add(i);
 
         int max = 1;
