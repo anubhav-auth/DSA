@@ -1,9 +1,5 @@
 class MinStack {
-    Stack<Pair<Integer, Integer>> stack;
-    
-    public MinStack() {
-        stack = new Stack<>();
-    }
+    Stack<Pair<Integer, Integer>> stack = new Stack<>();
     
     public void push(int x) {
         int currentMin = stack.isEmpty() ? x : Math.min(x, stack.peek().getValue());
