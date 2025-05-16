@@ -1,21 +1,26 @@
 class Solution {
     public List<String> generateParenthesis(int n) {
         List<String> result = new ArrayList<>();
-        rec(result, "", 0, 0, n);
+        backtrack(result, new StringBuilder(), 0, 0, n);
         return result;
     }
 
-    private void rec(List<String> strList, String curr, int op, int cl, int max) {
-        if (curr.length() == max * 2) {
-            strList.add(curr);
+    private void backtrack(List<String> res, StringBuilder sb, int open, int close, int max) {
+        if (sb.length() == max * 2) {
+            res.add(sb.toString()); // Make a copy of the current string
             return;
         }
 
-        if (op < max) {
-            rec(strList, curr + "(", op + 1, cl, max);
+        if (open < max) {
+            sb.append('(');
+            backtrack(res, sb, open + 1, close, max);
+            sb.deleteCharAt(sb.length() - 1); // backtrack
         }
-        if (cl < op) {
-            rec(strList, curr + ")", op, cl + 1, max);
+
+        if (close < open) {
+            sb.append(')');
+            backtrack(res, sb, open, close + 1, max);
+            sb.deleteCharAt(sb.length() - 1); // backtrack
         }
     }
 }
