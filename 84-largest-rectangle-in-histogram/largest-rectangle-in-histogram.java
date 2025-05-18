@@ -4,13 +4,13 @@ class Solution {
         System.arraycopy(heights, 0, h, 0, heights.length);
         h[h.length - 1] = 0;
 
-        Stack<Integer> s = new Stack<>();
+        Deque<Integer> s = new ArrayDeque<>();
         int max = 0;
 
         for(int i = 0; i<h.length; i++){
-            while(!s.empty() && h[i] < h[s.peek()]){
+            while(!s.isEmpty() && h[i] < h[s.peek()]){
                 int he = h[s.pop()];
-                int b = (s.empty())? i : i - s.peek() - 1;
+                int b = (s.isEmpty())? i : i - s.peek() - 1;
                 max = Math.max(he*b, max);
             }
             s.push(i);
