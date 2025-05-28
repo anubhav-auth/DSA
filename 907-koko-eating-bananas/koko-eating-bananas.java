@@ -1,6 +1,6 @@
 class Solution {
     public int minEatingSpeed(int[] piles, int h) {
-        int max = Arrays.stream(piles).max().getAsInt();
+        int max = Integer.MAX_VALUE;
         int l = 1, r = max;
         int result = max;
 
