@@ -7,7 +7,7 @@ class Solution {
         while(l<=r){
             int mid = l + (r-l)/2;
 
-            int he = getTotalHours(piles, mid);
+            int he = getTotalHours(piles, mid, h);
 
             if (he <= h) {
                 result = mid;
@@ -20,11 +20,12 @@ class Solution {
         return result;
     }
 
-    int getTotalHours(int[] piles, int k) {
-        int hours = 0;
-        for (int pile : piles) {
-            hours += Math.ceil((double) pile / k);
-        }
-        return hours;
+    int getTotalHours(int[] piles, int k, int h) {
+    int hours = 0;
+    for (int pile : piles) {
+        hours += (pile + k - 1) / k;
+        if (hours > h) return hours;
     }
+    return hours;
+}
 }
