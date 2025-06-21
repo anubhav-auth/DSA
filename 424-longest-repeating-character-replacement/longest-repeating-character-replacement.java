@@ -1,23 +1,23 @@
 class Solution {
     public int characterReplacement(String s, int k) {
-        HashMap<Character, Integer> hm = new HashMap<>();
-        int i = 0, maxFreq = 0, maxSize = 0;
+        int[] freq = new int[26];
+        int left = 0, maxFreq = 0, maxLen = 0;
 
-        for(int r = 0; r < s.length(); r++){
-            char c = s.charAt(r);
-            hm.put(c , hm.getOrDefault(c, 0) + 1);
-            maxFreq = (maxFreq > hm.get(c)) ? maxFreq: hm.get(c);
-            
-            int windowLength = r-i+1; 
+        for (int right = 0; right < s.length(); right++) {
+            int idx = s.charAt(right) - 'A';
+            freq[idx]++;
+            maxFreq = Math.max(maxFreq, freq[idx]);
 
-            if( (windowLength - maxFreq ) > k){
-                hm.put(s.charAt(i), hm.get(s.charAt(i))-1);
-                i++;
+            int windowSize = right - left + 1;
+
+            if (windowSize - maxFreq > k) {
+                freq[s.charAt(left) - 'A']--;
+                left++;
             }
-            maxSize = (maxSize> (r-i+1)) ? maxSize: (r-i+1);
+
+            maxLen = Math.max(maxLen, right - left + 1);
         }
 
-        return maxSize;
-
+        return maxLen;
     }
 }
