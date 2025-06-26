@@ -9,11 +9,10 @@
  * }
  */
 class Solution {
-    public ListNode reorderList(ListNode head) {
-        if(head.next == null) return head;
+    public void reorderList(ListNode head) {
+        if(head == null || head.next == null) return;
 
-        ListNode s = head; // mid
-        ListNode f = head;
+        ListNode s = head, f = head;
         while(f != null && f.next != null){
             s = s.next;
             f = f.next.next;
@@ -22,7 +21,17 @@ class Solution {
         ListNode n = reverseList(s.next);
         s.next = null;
 
-        return mergeTwoLists(head, n);
+        f = head;
+        while (n != null) {
+            ListNode tmp1 = f.next;
+            ListNode tmp2 = n.next;
+
+            f.next = n;
+            n.next = tmp1;
+
+            f = tmp1;
+            n = tmp2;
+        }
     }
 
     public static ListNode reverseList(ListNode head) {
@@ -34,29 +43,5 @@ class Solution {
         head.next.next = head;
         head.next = null;
         return newHead;
-    }
-
-    public ListNode mergeTwoLists(ListNode list1, ListNode list2) {
-        ListNode head = new ListNode(-101); //dummy wil return head.next
-        ListNode temp = head;
-
-        int a = 1;
-        
-        while(list1 != null && list2 != null){
-            if(a%2 != 0){
-                temp.next = list1;
-                list1 = list1.next;
-                a++;
-            }else{
-                temp.next = list2;
-                list2 = list2.next;
-                a++;
-            }
-            temp = temp.next;
-        }
-
-        temp.next = (list1 != null) ? list1 : list2;
-
-        return head.next;
     }
 }
