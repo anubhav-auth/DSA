@@ -8,12 +8,12 @@ class Solution {
             fast = nums[nums[fast]];
         } while (slow != fast);
 
-        int entry = nums[0];
-        while (entry != slow) {
-            entry = nums[entry];
+        slow = nums[0];
+        while (slow != fast) {
             slow = nums[slow];
+            fast = nums[fast];
         }
 
-        return entry;
+        return slow;
     }
 }
