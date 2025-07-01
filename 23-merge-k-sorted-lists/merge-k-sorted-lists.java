@@ -13,11 +13,16 @@ class Solution {
         int k = lists.length;
         if(k == 0) return null;
 
-        for(int i = 1; i < k; i++){
-            lists[i] = mergeTwoLists(lists[i-1], lists[i]);
-        }
+        return divideAndMerge(lists, 0, k-1);
+    }
 
-        return lists[k-1];
+    public static ListNode divideAndMerge(ListNode[] lists, int left, int right){
+        if(left == right) return lists[left];
+
+        int mid = left + (right-left)/2;
+        ListNode l1 = divideAndMerge(lists, left, mid);
+        ListNode l2 = divideAndMerge(lists, mid + 1, right);
+        return mergeTwoLists(l1, l2);
     }
 
     public static ListNode mergeTwoLists(ListNode list1, ListNode list2) {
