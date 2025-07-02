@@ -16,17 +16,20 @@
 class Solution {
     boolean b = true;
     public boolean isBalanced(TreeNode root) {
-        depth(root);
-        return b;
+        return depth(root) != -1;
     }
 
     public int depth(TreeNode root) {
-        if(root == null) return 0;
+        if (root == null) return 0;
 
-        int left = depth(root.left);
-        int right = depth(root.right);
+        int lh = depth(root.left);
+        if (lh == -1) return -1;
 
-        b = b && !(Math.abs(left-right) > 1);
-        return 1 + Math.max(left, right);
+        int rh = depth(root.right);
+        if (rh == -1) return -1;
+
+        if (Math.abs(lh - rh) > 1) return -1;
+
+        return 1 + Math.max(lh, rh);
     }
 }
