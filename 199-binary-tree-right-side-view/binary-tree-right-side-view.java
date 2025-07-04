@@ -18,12 +18,12 @@ class Solution {
         List<Integer> l = new ArrayList<>();
         if(root == null) return l;
 
-        Queue<TreeNode> q = new LinkedList<>();
+        Queue<TreeNode> q = new ArrayDeque<>();
         q.add(root);
 
         while(!q.isEmpty()){
             int size = q.size();
-            TreeNode node = new TreeNode();
+            TreeNode node = null;
 
             for(int i = 0; i < size; i++){
                 node = q.poll();
