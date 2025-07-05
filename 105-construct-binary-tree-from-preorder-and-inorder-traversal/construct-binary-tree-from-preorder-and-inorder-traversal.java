@@ -14,29 +14,22 @@
  * }
  */
 class Solution {
-    int prePtr = 0;
-    int[] preorder, inorder;
-    Map<Integer, Integer> idxMap = new HashMap<>();
-
-    TreeNode buildTree(int[] preorder, int[] inorder) {
-        this.preorder = preorder;
-        this.inorder = inorder;
-        for (int i = 0; i < inorder.length; i++)
-            idxMap.put(inorder[i], i);
-        return helper(0, inorder.length - 1);
+    private int p=0;
+    private int i=0;
+    public TreeNode buildTree(int[] preorder, int[] inorder) {
+        return build(preorder, inorder , Integer.MIN_VALUE);
     }
-
-    TreeNode helper(int inLeft, int inRight) {
-        if (inLeft > inRight)
+    private TreeNode build(int []preorder, int []inorder , int stop){
+        if(p>=preorder.length){
             return null;
-
-        int rootVal = preorder[prePtr++];
-        TreeNode root = new TreeNode(rootVal);
-
-        int mid = idxMap.get(rootVal);
-        root.left = helper(inLeft, mid - 1);
-        root.right = helper(mid + 1, inRight);
-        return root;
+        }
+        if(inorder[i]==stop){
+            i++;
+            return null;
+        }
+        TreeNode node=new TreeNode(preorder[p++]);
+        node.left=build(preorder,inorder,node.val);
+        node.right=build(preorder,inorder,stop);
+        return node;
     }
-
 }
