@@ -10,57 +10,36 @@
 public class Codec {
     // Encodes a tree to a single string.
     public String serialize(TreeNode root) {
-        if (root == null)
-            return "";
+        StringBuilder sb = new StringBuilder();
+        build(root, sb);
+        return sb.toString();
+    }
 
-        List<String> data = new ArrayList<>();
-        Queue<TreeNode> q = new LinkedList<>();
-        q.add(root);
-
-        while (!q.isEmpty()) {
-            TreeNode node = q.poll();
-            if (node != null) {
-                data.add(String.valueOf(node.val));
-                q.add(node.left);
-                q.add(node.right);
-            } else {
-                data.add("null");
-            }
+    private void build(TreeNode node, StringBuilder sb) {
+        if (node == null) {
+            sb.append("null,");
+            return;
         }
-
-        return String.join(",", data);
+        sb.append(node.val).append(",");
+        build(node.left, sb);
+        build(node.right, sb);
     }
 
     // Decodes your encoded data to tree.
     public TreeNode deserialize(String data) {
-        if (data == null || data.equals("null") || data.equals(""))
+        String[] tokens = data.split(",");
+        Queue<String> queue = new LinkedList<>(Arrays.asList(tokens));
+        return dfs(queue);
+    }
+
+    private TreeNode dfs(Queue<String> queue) {
+        String val = queue.poll();
+        if (val.equals("null"))
             return null;
-
-        String[] parts = data.split(",");
-
-        TreeNode root = new TreeNode(Integer.parseInt(parts[0]));
-
-        Queue<TreeNode> queue = new LinkedList<>();
-        queue.add(root);
-
-        int i = 1;
-        while (!queue.isEmpty() && i < parts.length) {
-            TreeNode parent = queue.poll();
-
-            if (!parts[i].equals("null")) {
-                parent.left = new TreeNode(Integer.parseInt(parts[i]));
-                queue.add(parent.left);
-            }
-            i++;
-
-            if (i < parts.length && !parts[i].equals("null")) {
-                parent.right = new TreeNode(Integer.parseInt(parts[i]));
-                queue.add(parent.right);
-            }
-            i++;
-        }
-
-        return root;
+        TreeNode node = new TreeNode(Integer.parseInt(val));
+        node.left = dfs(queue);
+        node.right = dfs(queue);
+        return node;
     }
 }
 
