@@ -1,24 +1,25 @@
 
 class Trie {
 
-    final static class TrieNode {
+    private static class TrieNode {
         final TrieNode[] children = new TrieNode[26];
         boolean isEnd = false;
     }
 
-    final TrieNode root = new TrieNode();
+    TrieNode root;
 
-    public Trie() {}
+    public Trie() {
+        root = new TrieNode();
+    }
 
     public void insert(String word) {
         TrieNode node = root;
 
-        for (int i = 0; i < word.length(); i++) {
-            char ch = word.charAt(i);
-            int j = ch - 'a';
-            if (node.children[j] == null)
-                node.children[j] = new TrieNode();
-            node = node.children[j];
+        for (char ch : word.toCharArray()) {
+            int i = ch - 'a';
+            if (node.children[i] == null)
+                node.children[i] = new TrieNode();
+            node = node.children[i];
         }
 
         node.isEnd = true;
@@ -36,13 +37,12 @@ class Trie {
     public TrieNode getNode(String str) {
         TrieNode node = root;
 
-        for (int i = 0; i < str.length(); i++) {
-            char ch = str.charAt(i);
-            int j = ch - 'a';
+        for (char ch : str.toCharArray()) {
+            int i = ch - 'a';
             
-            if (node.children[j] == null)
+            if (node.children[i] == null)
                 return null;
-            node = node.children[j];
+            node = node.children[i];
         }
 
         return node;
